@@ -1,3 +1,67 @@
+.button-config{
+    padding: 10px;
+    float: left;
+}
+
+.new-line-div{
+    display: block;
+}
+
+.inline-div{
+    display: inline;
+}
+
+.button-text{
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 30px;
+    text-align: center;
+}
+
+btn {
+    margin-left: 100px;
+}
+
+h3{
+    margin-top: 10px;
+    display: inline-block;
+}
+
+h4{
+    margin-top: 10px;
+}
+
+.select-info{
+    font-size: 15px;
+    text-align: center;
+}
+
+.div-col {
+    float: left;
+    padding: 10px 10px 10px 10px;
+    width: 50%;
+}
+
 .configuration {
-    width: 500px;
+    width: 600px;    
+}
+
+.iteration-count {
+    min-height: 70px;
+    padding: 5px 0px 20px 30px;
+}
+
+#iteration-input {
+    min-height: 45px;
+    text-align: right;
+}
+
+.buttons-div {
+    height: 70px;
+}
+
+.span-iteration{
+    font-size: 20px;
 }
