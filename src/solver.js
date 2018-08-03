@@ -9,20 +9,73 @@ validMoves = [[false, false, true, true],
 [true, true, false, false]];
 
 
+function Queue(){
+    this.data = [];
+}
+
+Queue.prototype.add = function(record){
+    this.data.unshift(record);
+}
+
+Queue.prototype.remove = function(){
+    this.data.pop();
+}
+
+Queue.prototype.first = function(){
+    return this.data[0];
+}
+
+Queue.prototype.last = function(){
+    return this.data[this.data.length - 1];
+}
+
+Queue.prototype.size = function(){
+    return this.data.length;
+}
+
+
 class Solver{
     constructor(board){
         this.board = board;
+        this.frontier = new Node(this.board);
+        this.solution = [];
     }
 
+    isCompletedAI(board){
+        for(var i  = 0; i < 8 ; i++){
+            if(board[i] != i + 1){
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    breadthFirstSearch(){
+        var Q = new Queue();
+        Q.add(this.frontier);
+        var V;
+        var endPoint;
+        while(Q.size() > 0){
+            V = Q.last();
+            Q.remove();
+            V.generateStates();
+            if(isCompletedAI(V.board)){
+                endPoint = V;
+                break;
+            }
+            for(var i = 0; i < V.children.size(); i++){
+                Q.add(V.children[i]);
+            }
+        }   
+    }
 }
 
 
 class Node{
-    constructor(parent=null,height = 0,board){
+    constructor(board){
         this.children = [];
-        this.parent = parent;
-        this.height = 0;
         this.parent = null;
+        this.height = 0;
         this.board = board;
     }
 

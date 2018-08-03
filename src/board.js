@@ -27,8 +27,4 @@ class Board{
         
 
     }
-
-    changeColor(color){
-        return (color == WHITE) ? GRAY : WHITE; 
-    }
 }
