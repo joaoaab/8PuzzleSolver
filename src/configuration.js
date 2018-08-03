@@ -45,7 +45,6 @@ class Configuration {
         this.play_button.html('<span class="glyphicon glyphicon-play"></span>');
         this.play_button.parent(this.control_buttons);
 
-
         // Replay Button
         this.replay_button = createButton('');
         this.replay_button.addClass('btn');
