@@ -38,6 +38,7 @@ class Configuration {
 
         // Play Button
         this.play_button = createButton('');
+        this.play_button.id('play');
         this.play_button.addClass('btn');
         this.play_button.addClass('btn-lg');
         this.play_button.addClass('btn-outline-primary');
@@ -47,6 +48,7 @@ class Configuration {
 
         // Replay Button
         this.replay_button = createButton('');
+        this.replay_button.id('replay');
         this.replay_button.addClass('btn');
         this.replay_button.addClass('btn-lg');
         this.replay_button.addClass('btn-outline-danger');
@@ -56,6 +58,7 @@ class Configuration {
 
         // Shuffle Button
         this.shuffle_button = createButton('');
+        this.shuffle_button.id('shuffle');
         this.shuffle_button.addClass('btn');
         this.shuffle_button.addClass('btn-lg');
         this.shuffle_button.addClass('btn-outline-primary');
@@ -63,17 +66,10 @@ class Configuration {
         this.shuffle_button.html('<span class="glyphicon glyphicon-random"></span>')
         this.shuffle_button.parent(this.control_buttons);
 
-
-
-     
-
         // Right Collumn
         this.right_col = createDiv('');
         this.right_col.parent(this.div);
         this.right_col.addClass('div-col');
-        
-
-        
 
     }
 }

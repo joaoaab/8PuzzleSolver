@@ -1,3 +1,9 @@
+/*
+@File: Javascript Solver for the 8Puzzle Game    
+@Author : João Amaro de Assunção Bisneto
+
+*/
+
 validMoves = [[false, false, true, true],
 [true, false, true, true],
 [true, false, false, true],
