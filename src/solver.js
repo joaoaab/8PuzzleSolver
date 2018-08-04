@@ -4,7 +4,7 @@
 
 */
 
-validMoves = [[false, false, true, true],
+let validMoves = [[false, false, true, true],
 [true, false, true, true],
 [true, false, false, true],
 [false, true, true, true] ,
@@ -48,12 +48,13 @@ class Solver{
     }
 
     isCompletedAI(board){
-        for(var i  = 0; i < 8 ; i++){
+        for(var i  = 0; i < board.length - 1 ; i++){
             if(board[i] != i + 1){
-                return 0;
+                console.log(" i = " + i + " board[i] = " + board[i]);
+                return false;
             }
         }
-        return 1;
+        return true;
     }
 
     breadthFirstSearch(){
@@ -65,14 +66,16 @@ class Solver{
             V = Q.last();
             Q.remove();
             V.generateStates();
-            if(isCompletedAI(V.board)){
+            if(this.isCompletedAI(V.board)){
                 endPoint = V;
                 break;
             }
-            for(var i = 0; i < V.children.size(); i++){
+            for(var i = 0; i < V.children.length; i++){
                 Q.add(V.children[i]);
             }
         }   
+        console.log(endPoint);
+        return (endPoint.board);
     }
 }
 
@@ -87,6 +90,7 @@ class Node{
 
     addChild(child){
         child.parent = this;
+        child.height = this.height + 1;
         this.children.push(child);
     }
 
@@ -144,35 +148,36 @@ class Node{
     */
     generateStates(){
         var indexZero = this.getIndexZero();
-        movesAvaliable = validMoves[indexZero];
+        var movesAvaliable = validMoves[indexZero];
         var swapVar;
+        var newBoard;
         if(movesAvaliable[0]){
             newBoard = this.board;
             swapVar = newBoard[indexZero]
             newBoard[indexZero] = newBoard[indexZero - 1];
             newBoard[indexZero - 1] = swapVar;
-            this.addChild(Node(parent=this,height = this.height + 1, newBoard));
+            this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[1]){
             newBoard = this.board;
             swapVar = newBoard[indexZero];
             newBoard[indexZero] = newBoard[indexZero - 3];
             newBoard[indexZero - 3] = swapVar;
-            this.addChild(Node(parent=this,height = this.height + 1, newBoard));
+            this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[2]){
             newBoard = this.board;
             swapVar = newBoard[indexZero];
             newBoard[indexZero] = newBoard[indexZero + 1];
             newBoard[indexZero + 1] = swapVar;            
-            this.addChild(Node(parent=this,height = this.height + 1, newBoard));
+            this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[3]){
             newBoard = this.board;
             swapVar = newBoard[indexZero];
             newBoard[indexZero] = newBoard[indexZero + 3];
             newBoard[indexZero + 3] = swapVar;
-            this.addChild(Node(parent=this,height = this.height + 1, newBoard));
+            this.addChild(new Node(newBoard));
         }
     }
 }
