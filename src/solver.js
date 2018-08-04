@@ -7,13 +7,14 @@
 let validMoves = [[false, false, true, true],
 [true, false, true, true],
 [true, false, false, true],
-[false, true, true, true] ,
+[false, true, true, true],
 [true, true, true, true],
 [true, true, false, true] ,
-[false, true, true, false] ,
-[true, true, true, false] ,
+[false, true, true, false],
+[true, true, true, false],
 [true, true, false, false]];
 
+var ITERATIONS = 0;
 
 function Queue(){
     this.data = [];
@@ -42,13 +43,18 @@ Queue.prototype.size = function(){
 
 class Solver{
     constructor(board){
-        this.board = board;
-        this.frontier = new Node(this.board);
+        this.board = Object.assign({}, board);
+        this.frontier = new Node(Object.assign({}, board));
         this.solution = [];
     }
 
+    setBoard(board){
+        this.board = Object.assign({}, board);
+        this.frontier = new Node(Object.assign({}, board));
+    }
+
     isCompletedAI(board){
-        for(var i  = 0; i < board.length - 1 ; i++){
+        for(var i  = 0; i < 8 ; i++){
             if(board[i] != i + 1){
                 console.log(" i = " + i + " board[i] = " + board[i]);
                 return false;
@@ -63,6 +69,7 @@ class Solver{
         var V;
         var endPoint;
         while(Q.size() > 0){
+            ITERATIONS++;
             V = Q.last();
             Q.remove();
             V.generateStates();
@@ -85,7 +92,7 @@ class Node{
         this.children = [];
         this.parent = null;
         this.height = 0;
-        this.board = board;
+        this.board = Object.assign({} ,board);
     }
 
     addChild(child){
@@ -99,14 +106,13 @@ class Node{
         Gets the index of the array which holds the blank digit
     */
     getIndexZero(){
-        var indexZero = 0;
-        for(var i = 0 ; i < this.board.length ; i++){
+        var index = 8;
+        for(var i = 0 ; i < 9 ; i++){
             if(this.board[i] == 0){
-                indexZero = i;
-                break;
+                index = i;
             }
         }
-        return indexZero;
+        return index;   
     }
 
     /*
@@ -152,29 +158,33 @@ class Node{
         var swapVar;
         var newBoard;
         if(movesAvaliable[0]){
-            newBoard = this.board;
+            newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero]
+            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - 1]);
             newBoard[indexZero] = newBoard[indexZero - 1];
             newBoard[indexZero - 1] = swapVar;
             this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[1]){
-            newBoard = this.board;
+            newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
+            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - 3]);
             newBoard[indexZero] = newBoard[indexZero - 3];
             newBoard[indexZero - 3] = swapVar;
             this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[2]){
-            newBoard = this.board;
+            newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
+            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero + 1]);
             newBoard[indexZero] = newBoard[indexZero + 1];
             newBoard[indexZero + 1] = swapVar;            
             this.addChild(new Node(newBoard));
         }
         if(movesAvaliable[3]){
-            newBoard = this.board;
+            newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
+            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - + 3]);
             newBoard[indexZero] = newBoard[indexZero + 3];
             newBoard[indexZero + 3] = swapVar;
             this.addChild(new Node(newBoard));

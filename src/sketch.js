@@ -33,10 +33,10 @@ function setup(){
         console.log(algorithm === 'BFS');
         if(algorithm  === "BFS"){
             console.log("Bfs Running");
-            solver.board = board.profile;
+            solver.setBoard(board.profile);
             board.profile = solver.breadthFirstSearch();
             console.log("BFS Finished");
-        } 
+        }
     });
 
 
@@ -49,14 +49,17 @@ function draw(){
     board.draw();
     // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
     var fps = frameRate();
-    fill(255);
+    fill(BLACK);
     stroke(0);
-    text("FPS: " + fps.toFixed(2), 10, height - 10);
-    console.log("Mouse X = " + mouseX + " Mouse y " + mouseY);
+    textSize(20);
+    text("FPS: " + fps.toFixed(2) + " Iterations: " + ITERATIONS, 10, height - 10);
 }
 
 function mouseClicked(){
-    moveBoard();
+    if(mouseX <= WIDTH && mouseY <= HEIGHT){
+        moveBoard();
+
+    }
 }
 
 
@@ -64,9 +67,7 @@ function moveBoard(){
     var j = Math.floor(mouseX/(HEIGHT/3));
     var i = Math.floor(mouseY/(WIDTH/3));
     var index = i*3 + j;
-    console.log(index);
     var avaliableMoves = validMoves[index];
-    console.log(avaliableMoves);
     if(board.profile[index] != 0){
         if(avaliableMoves[0]){
             if(board.profile[index - 1] == 0){
