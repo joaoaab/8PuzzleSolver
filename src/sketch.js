@@ -1,17 +1,6 @@
 let board;
 let configuration;
-/*
-let validMoves = [[false, false, true, true],
-[true, false, true, true],
-[true, false, false, true],
-[false, true, true, true] ,
-[true, true, true, true],
-[true, true, false, true] ,
-[false, true, true, false] ,
-[true, true, true, false] ,
-[true, true, false, false]];
-*/
-
+let solver;
 
 function setup(){
     createCanvas(WIDTH, HEIGHT);
@@ -28,6 +17,7 @@ function setup(){
     });
 
     $('#play').click(() => {
+        ITERATIONS = 0;
         var algorithm = $('#algorithm-select').val();
         console.log("Algorithm : " + algorithm);
         console.log(algorithm === 'BFS');
@@ -37,10 +27,13 @@ function setup(){
             board.profile = solver.breadthFirstSearch();
             console.log("BFS Finished");
         }
+        else if(algorithm === "A*"){
+            console.log("A* Running");
+            solver.setBoard(board.profile);
+            board.profile = solver.aStart();
+            console.log("A* Finished");
+        }
     });
-
-
-
 
 }
 

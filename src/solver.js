@@ -40,6 +40,12 @@ Queue.prototype.size = function(){
     return this.data.length;
 }
 
+function comparer(a,b){
+    if(b > a) return 1;
+    else if(a == b) return 0;
+    else return -1;
+}
+
 
 class Solver{
     constructor(board){
@@ -63,6 +69,38 @@ class Solver{
         return true;
     }
 
+
+    aStart(){
+        var heapOpen = new StablePriorityQueue(comparer);
+        var heapClosed = new StablePriorityQueue(comparer);
+        heapOpen.add(this.frontier);
+        while(heapOpen.size > 0){
+            ITERATIONS++;
+            var V = heapOpen.poll();
+            V.generateStates();
+            if(this.isCompletedAI(V.board)){
+                this.endPoint = V;
+                break;
+            }
+            for(var i = 0 ; i < V.children.length; i++){
+                V.children[i].height = V.height + 1;
+                V.children[i].priority = V.children[i].height + V.children[i].manhattanHeuristic(V.children[i].board); 
+                if(heapOpen.hasBetter(V.children[i].hash, V.children[i].priority)){
+                    continue;
+                }
+                if(heapClosed.hasBetter(V.children[i].hash, V.children[i].priority)){
+                    continue;
+                }
+                heapOpen.add(V.children[i]);
+            }
+            heapClosed.add(V);
+        }
+        return (this.endPoint.board);
+    }
+
+    /*
+        Classic BFS Algorithm on a graph/tree
+    */
     breadthFirstSearch(){
         var Q = new Queue();
         Q.add(this.frontier);
@@ -93,12 +131,22 @@ class Node{
         this.parent = null;
         this.height = 0;
         this.board = Object.assign({} ,board);
+        this.hash = this.hashIt();
+        this.priority = this.manhattanHeuristic(this.board);
     }
 
     addChild(child){
         child.parent = this;
         child.height = this.height + 1;
         this.children.push(child);
+    }
+
+    hashIt(){
+        var sum = 0;
+        for(var i = 0; i < 9 ; i++){
+            sum += this.board[i]*Math.pow(10,i);
+        }
+        return sum;
     }
 
 
@@ -120,14 +168,14 @@ class Node{
     */
     manhattanHeuristic(board){
         var heuristicValue = 0;
-        for(var i = 0; i < board.length; i++){
+        for(var i = 0; i < 9; i++){
             var value = board[i];
-            var x = i / 3;
+            var x = Math.floor(i / 3);
             var y = i % 3;
             var xTarget = 0;
             var yTarget = 0;
             if(value != 0){
-                xTarget = value/3;
+                xTarget = Math.floor(value/3);
                 yTarget = value - (xTarget*3);
             }
             else{
