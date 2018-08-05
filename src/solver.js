@@ -15,6 +15,7 @@ let validMoves = [[false, false, true, true],
 [true, true, false, false]];
 
 var ITERATIONS = 0;
+var MINPRIORITY = 10000000;
 
 function Queue(){
     this.data = [];
@@ -47,6 +48,8 @@ function comparer(a,b){
 }
 
 
+
+
 class Solver{
     constructor(board){
         this.board = Object.assign({}, board);
@@ -62,7 +65,6 @@ class Solver{
     isCompletedAI(board){
         for(var i  = 0; i < 8 ; i++){
             if(board[i] != i + 1){
-                console.log(" i = " + i + " board[i] = " + board[i]);
                 return false;
             }
         }
@@ -71,20 +73,22 @@ class Solver{
 
 
     aStart(){
-        var heapOpen = new StablePriorityQueue(comparer);
-        var heapClosed = new StablePriorityQueue(comparer);
+        var heapOpen = new FastPriorityQueue(comparer);
+        var heapClosed = new FastPriorityQueue(comparer);
         heapOpen.add(this.frontier);
         while(heapOpen.size > 0){
             ITERATIONS++;
             var V = heapOpen.poll();
+            MINPRIORITY = V.priority;
+            console.log("Min Priority : " + MINPRIORITY);
             V.generateStates();
-            if(this.isCompletedAI(V.board)){
+            if(V.hash == 87654321){
                 this.endPoint = V;
                 break;
             }
             for(var i = 0 ; i < V.children.length; i++){
                 V.children[i].height = V.height + 1;
-                V.children[i].priority = V.children[i].height + V.children[i].manhattanHeuristic(V.children[i].board); 
+                V.children[i].priority = V.children[i].height + V.children[i].manhattanHeuristic();// + V.children[i].outOfPlaceTilesHeuristic(); 
                 if(heapOpen.hasBetter(V.children[i].hash, V.children[i].priority)){
                     continue;
                 }
@@ -96,6 +100,8 @@ class Solver{
             heapClosed.add(V);
         }
         return (this.endPoint.board);
+        heapOpen.clear();
+        heapClosed.clear();
     }
 
     /*
@@ -154,7 +160,7 @@ class Node{
         Gets the index of the array which holds the blank digit
     */
     getIndexZero(){
-        var index = 8;
+        var index = 0
         for(var i = 0 ; i < 9 ; i++){
             if(this.board[i] == 0){
                 index = i;
@@ -166,35 +172,37 @@ class Node{
     /*
         Calculates the distance of the numbers from it's righteous place
     */
-    manhattanHeuristic(board){
+    manhattanHeuristic(){
         var heuristicValue = 0;
         for(var i = 0; i < 9; i++){
-            var value = board[i];
+            var value = this.board[i];
             var x = Math.floor(i / 3);
             var y = i % 3;
             var xTarget = 0;
             var yTarget = 0;
             if(value != 0){
-                xTarget = Math.floor(value/3);
-                yTarget = value - (xTarget*3);
+                xTarget = Math.floor((value - 1)/3);
+                yTarget = (value-1)%3;
             }
             else{
                 xTarget = 2;
-                yTarget = 3;
-            }
-
-            if(yTarget == 0){
-                xTarget -= 1;
                 yTarget = 2;
-            }
-            else{
-                yTarget -= 1;
             }
             heuristicValue += abs(x - xTarget) + abs(y - yTarget);
         }
         return heuristicValue;
     }
 
+
+    outOfPlaceTilesHeuristic(){
+        var sum = 0;
+        for(var i = 0; i < 9 ; i++){
+            if(this.board[i] != 0 && this.board[i] != i + 1){
+                sum++;
+            }
+        }
+        return sum;
+    }
 
     /*
         Generates the possible scenarios from the current board state
@@ -232,7 +240,7 @@ class Node{
         if(movesAvaliable[3]){
             newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
-            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - + 3]);
+            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero + 3]);
             newBoard[indexZero] = newBoard[indexZero + 3];
             newBoard[indexZero + 3] = swapVar;
             this.addChild(new Node(newBoard));

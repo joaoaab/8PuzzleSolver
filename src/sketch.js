@@ -45,7 +45,7 @@ function draw(){
     fill(BLACK);
     stroke(0);
     textSize(20);
-    text("FPS: " + fps.toFixed(2) + " Iterations: " + ITERATIONS, 10, height - 10);
+    text("FPS: " + fps.toFixed(2) + " Iterations: " + ITERATIONS + "  Min Priority : " + MINPRIORITY, 10, height - 10);
 }
 
 function mouseClicked(){
