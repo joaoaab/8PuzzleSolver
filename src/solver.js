@@ -42,12 +42,15 @@ Queue.prototype.size = function(){
 }
 
 function comparer(a,b){
-    if(b > a) return 1;
-    else if(a == b) return 0;
-    else return -1;
+    return a.priority - b.priority;
 }
 
-
+function hasBetter(list, hash, priority){
+    for(var node = list.first ; node !== null; node = node.next){
+        if(node.object.hash == hash && node.object.priority < priority)return true;
+    }
+    return false;
+}
 
 
 class Solver{
@@ -73,12 +76,12 @@ class Solver{
 
 
     aStart(){
-        var heapOpen = new FastPriorityQueue(comparer);
-        var heapClosed = new FastPriorityQueue(comparer);
+        var heapOpen = new SortedList(comparer);
+        var heapClosed = new SortedList(comparer);
         heapOpen.add(this.frontier);
-        while(heapOpen.size > 0){
+        while(heapOpen.getCount() > 0){
             ITERATIONS++;
-            var V = heapOpen.poll();
+            var V = heapOpen.popFirst();
             MINPRIORITY = V.priority;
             console.log("Min Priority : " + MINPRIORITY);
             V.generateStates();
@@ -88,11 +91,11 @@ class Solver{
             }
             for(var i = 0 ; i < V.children.length; i++){
                 V.children[i].height = V.height + 1;
-                V.children[i].priority = V.children[i].height + V.children[i].manhattanHeuristic();// + V.children[i].outOfPlaceTilesHeuristic(); 
-                if(heapOpen.hasBetter(V.children[i].hash, V.children[i].priority)){
+                V.children[i].priority = V.children[i].height + V.children[i].manhattanHeuristic() + V.children[i].outOfPlaceTilesHeuristic(); 
+                if(hasBetter(heapOpen,V.children[i].hash, V.children[i].priority)){
                     continue;
                 }
-                if(heapClosed.hasBetter(V.children[i].hash, V.children[i].priority)){
+                if(hasBetter(heapClosed,V.children[i].hash, V.children[i].priority)){
                     continue;
                 }
                 heapOpen.add(V.children[i]);
