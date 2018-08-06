@@ -15,8 +15,8 @@ class Board{
 1       Linear Shuffle Algorithm
     */
     shuffle(){
-        for(var i = 0; i < this.profile.length; i++){
-            var j = Math.floor((Math.random() * this.profile.length));
+        for(var i = 0; i < 9; i++){
+            var j = Math.floor((Math.random() * 9));
             var temp = this.profile[i];
             this.profile[i] = this.profile[j];
             this.profile[j] = temp;

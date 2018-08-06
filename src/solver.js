@@ -75,7 +75,7 @@ class Solver{
     }
 
 
-    aStart(){
+    aStar(){
         var heapOpen = new SortedList(comparer);
         var heapClosed = new SortedList(comparer);
         heapOpen.add(this.frontier);
@@ -83,8 +83,8 @@ class Solver{
             ITERATIONS++;
             var V = heapOpen.popFirst();
             MINPRIORITY = V.priority;
-            console.log("Min Priority : " + MINPRIORITY);
             V.generateStates();
+            redraw();
             if(V.hash == 87654321){
                 this.endPoint = V;
                 break;
@@ -219,7 +219,6 @@ class Node{
         if(movesAvaliable[0]){
             newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero]
-            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - 1]);
             newBoard[indexZero] = newBoard[indexZero - 1];
             newBoard[indexZero - 1] = swapVar;
             this.addChild(new Node(newBoard));
@@ -227,7 +226,6 @@ class Node{
         if(movesAvaliable[1]){
             newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
-            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero - 3]);
             newBoard[indexZero] = newBoard[indexZero - 3];
             newBoard[indexZero - 3] = swapVar;
             this.addChild(new Node(newBoard));
@@ -235,7 +233,6 @@ class Node{
         if(movesAvaliable[2]){
             newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
-            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero + 1]);
             newBoard[indexZero] = newBoard[indexZero + 1];
             newBoard[indexZero + 1] = swapVar;            
             this.addChild(new Node(newBoard));
@@ -243,7 +240,6 @@ class Node{
         if(movesAvaliable[3]){
             newBoard = Object.assign({}, this.board);
             swapVar = newBoard[indexZero];
-            console.log("trade : " + newBoard[indexZero] + " <-> " + newBoard[indexZero + 3]);
             newBoard[indexZero] = newBoard[indexZero + 3];
             newBoard[indexZero + 3] = swapVar;
             this.addChild(new Node(newBoard));

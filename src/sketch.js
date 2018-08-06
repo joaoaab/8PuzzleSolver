@@ -22,16 +22,12 @@ function setup(){
         console.log("Algorithm : " + algorithm);
         console.log(algorithm === 'BFS');
         if(algorithm  === "BFS"){
-            console.log("Bfs Running");
             solver.setBoard(board.profile);
             board.profile = solver.breadthFirstSearch();
-            console.log("BFS Finished");
         }
         else if(algorithm === "A*"){
-            console.log("A* Running");
             solver.setBoard(board.profile);
-            board.profile = solver.aStart();
-            console.log("A* Finished");
+            board.profile = solver.aStar();
         }
     });
 
