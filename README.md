@@ -2,6 +2,12 @@
 
 The Project target is to create a solver for the 8Puzzle game using concepts and algorithms learned at Intelligent Systems class
 
+## The Game : 
+![8 Puzzle Exmample](https://i.imgur.com/ztxrkkN.png)
+
+The Objective is to put the numbers in sequence [1,2,3,4,5,6,7,8,blank] and you can only move the blank square in vertical and horizontal directions.
+
+
 ## Getting Started
 
 All the extern Libraries are already in the /libs folder so all you need is a webserver to serve the index.html with the javascript.
@@ -21,10 +27,10 @@ There are 2 main classes on the project
 
 ## TODO
 in order of importance : 
-[] Implement some sort of parralellism so the rendering doesn't get stopped because the algorithm takes all the cpu time
-[] After completing the puzzle, the solution should be displayed step by step.
-[] Implement a better UI so it's possible to set the board as you like, view all the steps of the solution
-
+- [ ] Implement some sort of parralellism so the rendering doesn't get stopped because the algorithm takes all the cpu time
+- [ ] After completing the puzzle, the solution should be displayed step by step.
+- [ ] Implement a better UI so it's possible to set the board as you like, view all the steps of the solution
+- [ ] Implement for bigger boards ?
 
 
 ## Authors
