@@ -13,6 +13,8 @@ The Objective is to put the numbers in sequence [1,2,3,4,5,6,7,8,blank] and you 
 All the extern Libraries are already in the /libs folder so all you need is a webserver to serve the index.html with the javascript.
 I personally recommend using VSCode with the LiveServer Extension, it makes life so much easier :+1:
 
+or you can access the project through the github pages [clicking here](https://joaoaab.github.io/8PuzzleSolver/)
+
 ## What it does
 Currently it applies two complete algorithm to solve the puzzle
 * [A* or A Star](https://en.wikipedia.org/wiki/A*_search_algorithm)
