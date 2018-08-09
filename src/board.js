@@ -37,20 +37,19 @@ class Board{
         return (inversions % 2 == 0);
     }
 
-    draw (){
-        var color = WHITE;
+    draw(color){
         for(let i = 0 ; i < 3 ; i++){
             for(let j = 0; j < 3; j++){
                 fill(color);
                 stroke(0,0,255);
                 rect((i * this.width/3), (j * this.height / 3), 200, 200);
-                fill(BLACK);
             }
         }
         for(let i = 0; i < 3 ; i++){
             for(let j = 0 ; j < 3; j++){
                 textSize(100);
                 if(this.profile[i*3 + j] != 0){
+                    fill(BLACK);
                     text(this.profile[i*3 + j],(j * this.height / 3),(i * this.width/3), 200, 200);
                 }
             }

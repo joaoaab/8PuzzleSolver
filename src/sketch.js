@@ -34,8 +34,14 @@ function setup(){
 }
 
 function draw(){
-    background(127, 0, 0 , 255);
-    board.draw();
+    var color = WHITE;
+    if(isCompleted(board.profile)){
+        color = 'green';
+    }
+    else{
+        color = 'red';
+    }
+    board.draw(color);
     // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
     var fps = frameRate();
     fill(BLACK);
@@ -49,6 +55,14 @@ function mouseClicked(){
         moveBoard();
 
     }
+}
+
+
+function isCompleted(board){
+    for(var i = 0 ; i < 8; i++){
+        if(board[i] != i + 1) return false;
+    }
+    return true;
 }
 
 
