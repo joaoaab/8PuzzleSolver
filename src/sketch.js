@@ -1,12 +1,15 @@
 let board;
 let configuration;
 let solver;
+let solutionFound = false;
+let solution;
 
 function setup(){
     createCanvas(WIDTH, HEIGHT);
     board = new Board(WIDTH, HEIGHT);
     configuration = new Configuration(300,300,200);
     solver = new Solver(board.profile);
+    solutionFound = false;
 
     //Shuffle Click
     $('#shuffle').click(() => {
@@ -19,18 +22,16 @@ function setup(){
     $('#play').click(() => {
         ITERATIONS = 0;
         var algorithm = $('#algorithm-select').val();
-        console.log("Algorithm : " + algorithm);
-        console.log(algorithm === 'BFS');
         if(algorithm  === "BFS"){
             solver.setBoard(board.profile);
-            board.profile = solver.breadthFirstSearch();
+            solution = solver.breadthFirstSearch();
         }
         else if(algorithm === "A*"){
             solver.setBoard(board.profile);
-            board.profile = solver.aStar();
+            solution = solver.aStar();
         }
+        solutionFound = true;
     });
-
 }
 
 function draw(){
@@ -48,7 +49,31 @@ function draw(){
     stroke(0);
     textSize(20);
     text("FPS: " + fps.toFixed(2) + " Iterations: " + ITERATIONS + "  Min Priority : " + MINPRIORITY, 10, height - 10);
+    if(solutionFound){
+        setTimeout(printSolution(), 1000);
+        sleep(500);
+    }
+
 }
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
+
+function printSolution(){
+    board.profile = solution[solution.length - 1];
+    var i = solution.indexOf(board.profile);
+    solution.splice(i,1);
+    if(solution.length == 0){
+        solutionFound = false;
+    }
+}
+
 
 function mouseClicked(){
     if(mouseX <= WIDTH && mouseY <= HEIGHT){

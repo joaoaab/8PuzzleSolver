@@ -75,6 +75,16 @@ class Solver{
     }
 
 
+    createSolution(Node){
+        var list = [];
+        while(Node.parent != null){
+            list.push(Node.board);
+            Node = Node.parent;
+        }
+        return list;
+    }
+
+
     aStar(){
         var heapOpen = new SortedList(comparer);
         var heapClosed = new SortedList(comparer);
@@ -102,9 +112,9 @@ class Solver{
             }
             heapClosed.add(V);
         }
-        return (this.endPoint.board);
         heapOpen.clear();
         heapClosed.clear();
+        return this.createSolution(this.endPoint);
     }
 
     /*
