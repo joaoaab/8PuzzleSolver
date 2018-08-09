@@ -30,7 +30,7 @@ There are 2 main classes on the project
 ## TODO
 in order of importance : 
 - [ ] Implement some sort of parralellism so the rendering doesn't get stopped because the algorithm takes all the cpu time
-- [ ] After completing the puzzle, the solution should be displayed step by step.
+- [X] After completing the puzzle, the solution should be displayed step by step.
 - [ ] Implement a better UI so it's possible to set the board as you like, view all the steps of the solution
 - [ ] Implement for bigger boards ?
 
