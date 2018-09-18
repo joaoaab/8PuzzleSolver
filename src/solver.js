@@ -130,7 +130,8 @@ class Solver{
             V = Q.last();
             Q.remove();
             V.generateStates();
-            if(this.isCompletedAI(V.board)){
+            redraw();
+            if(V.hash == 87654321){
                 endPoint = V;
                 break;
             }
@@ -140,6 +141,40 @@ class Solver{
         }   
         console.log(endPoint);
         return (endPoint.board);
+    }
+
+    /*
+        Best First Search / Greedy Algorithm
+    */
+    bestFirstSearch(){
+        var heapOpen = new SortedList(comparer);
+        var heapClosed = new SortedList(comparer);
+        heapOpen.add(this.frontier);
+        while(heapOpen.getCount() > 0){
+            ITERATIONS++;
+            var V = heapOpen.popFirst();
+            MINPRIORITY = V.priority;
+            V.generateStates();
+            redraw();
+            if(V.hash == 87654321){
+                this.endPoint = V;
+                break;
+            }
+            for(var i = 0 ; i < V.children.length; i++){
+                V.children[i].priority = V.children[i].manhattanHeuristic() + V.children[i].outOfPlaceTilesHeuristic(); 
+                if(hasBetter(heapOpen,V.children[i].hash, V.children[i].priority)){
+                    continue;
+                }
+                if(hasBetter(heapClosed,V.children[i].hash, V.children[i].priority)){
+                    continue;
+                }
+                heapOpen.add(V.children[i]);
+            }
+            heapClosed.add(V);
+        }
+        heapOpen.clear();
+        heapClosed.clear();
+        return this.createSolution(this.endPoint);
     }
 }
 

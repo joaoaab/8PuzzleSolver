@@ -30,6 +30,10 @@ function setup(){
             solver.setBoard(board.profile);
             solution = solver.aStar();
         }
+        else if(algorithm === "Best First Search"){
+            solver.setBoard(board.profile);
+            solution = solver.bestFirstSearch();
+        }
         solutionFound = true;
     });
 }
