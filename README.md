@@ -19,6 +19,7 @@ or you can access the project through github pages [clicking here](https://joaoa
 Currently it applies two complete algorithm to solve the puzzle
 * [A* or A Star](https://en.wikipedia.org/wiki/A*_search_algorithm)
 * [BFS - Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search)
+* [BestFirstSearch / Greedy Algorithm](https://en.wikipedia.org/wiki/Best-first_search) a approach very similar to A*, but it doens't take into acocunt the steps needed to get to this state(i.e its height) so in more complex cases it's very close to BFS performance
 
 **The BFS algorithm uses too much ram and time to solve it, so i don't recommend testing it with a very complex board.**
 
