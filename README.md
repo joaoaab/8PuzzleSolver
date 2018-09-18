@@ -19,7 +19,7 @@ or you can access the project through github pages [clicking here](https://joaoa
 Currently it applies two complete algorithm to solve the puzzle
 * [A* or A Star](https://en.wikipedia.org/wiki/A*_search_algorithm)
 * [BFS - Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search)
-* [BestFirstSearch / Greedy Algorithm](https://en.wikipedia.org/wiki/Best-first_search) a approach very similar to A*, but it doens't take into acocunt the steps needed to get to this state(i.e its height) so in more complex cases it's very close to BFS performance
+* [BestFirstSearch / Greedy Algorithm](https://en.wikipedia.org/wiki/Best-first_search)
 
 **The BFS algorithm uses too much ram and time to solve it, so i don't recommend testing it with a very complex board.**
 
@@ -40,6 +40,9 @@ the pseudocode is as follows
 BFS is also a well known graph transversal algorithm, it's approach is to "visit" each node in a layer before going to the next layer
 [Click here for Pseudocode and visualization of the BFS algorithm](https://en.wikipedia.org/wiki/Breadth-first_search)
 
+
+## Best First Search
+An approach very similar to A*, but it doens't take into acocunt the steps needed to get to this state(i.e its height) so in more complex cases it's very close to BFS performance
 
 ## Heuristics
 A* is a heuristic search, it uses a heuristic value to order the lists of nodes so i had to implement some heuristics to test
