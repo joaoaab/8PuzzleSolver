@@ -23,7 +23,6 @@ class Configuration {
         this.selector.option('A*');
         this.selector.option('BFS');
         this.selector.option('Best First Search');
-        this.selector.option('DFS');
         this.selector.parent(this.left_col);
 
         // Buttons div
